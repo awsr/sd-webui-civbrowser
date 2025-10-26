@@ -139,7 +139,7 @@ def type_path(type: str) -> Path:
 
 def basemodel_path(baseModel: str) -> Path:
     basemodelPath = ""
-    if not 'SD 1' in baseModel:
+    if 'SD 1' not in baseModel:
         basemodelPath = '_' + baseModel.replace(' ', '_').replace('.', '_')
     return Path(basemodelPath)
 

@@ -407,8 +407,8 @@ class Components():
                     blBan = False
                     blClr = False
                 else:
-                    _blFav = not grTxtCreator in FavoriteCreators.getAsList()
-                    _blBan = not grTxtCreator in BanCreators.getAsList() 
+                    _blFav = grTxtCreator not in FavoriteCreators.getAsList()
+                    _blBan = grTxtCreator not in BanCreators.getAsList() 
                     blFav = _blFav and _blBan
                     blBan = _blFav and _blBan
                     blClr = not (blFav and blBan)
@@ -787,8 +787,8 @@ class Components():
                                               "search", grChkboxShowNsfw, grDrpdwnPeriod, grDrpdwnBasemodels)
                 self.Civitai.setShowNsfw(grChkboxShowNsfw)
                 grTxtPages = self.Civitai.getPages()
-                hasPrev = not self.Civitai.prevPage() is None
-                hasNext = not self.Civitai.nextPage() is None
+                hasPrev = self.Civitai.prevPage() is not None
+                hasNext = self.Civitai.nextPage() is not None
                 enableJump = hasPrev or hasNext
                 # model_names = self.Civitai.getModelNames() if (grChkboxShowNsfw) else self.Civitai.getModelNamesSfw()
                 # HTML = self.Civitai.modelCardsHtml(model_names, self.id)
@@ -820,7 +820,7 @@ class Components():
 
             def preload_nextpage():
                 import threading
-                hasNext = not self.Civitai.nextPage() is None
+                hasNext = self.Civitai.nextPage() is not None
                 if hasNext:
                     url = self.Civitai.nextPage()
                     thread = threading.Thread(target=self.Civitai.requestApi, args=(url,), kwargs= {"timeout": read_timeout()}) 
@@ -1052,8 +1052,8 @@ class Components():
                         response) if isNext else self.Civitai.backPage(response)
                 self.Civitai.setShowNsfw(grChkboxShowNsfw)
                 grTxtPages = self.Civitai.getPages()
-                hasPrev = not self.Civitai.prevPage() is None
-                hasNext = not self.Civitai.nextPage() is None
+                hasPrev = self.Civitai.prevPage() is not None
+                hasNext = self.Civitai.nextPage() is not None
                 # model_names = self.Civitai.getModelNames() if (grChkboxShowNsfw) else self.Civitai.getModelNamesSfw()
                 # HTML = self.Civitai.modelCardsHtml(model_names, self.id)
                 models = self.Civitai.getModels(grChkboxShowNsfw)
@@ -1125,8 +1125,8 @@ class Components():
                     self.Civitai.pageJump(response,grSldrPage)
                 self.Civitai.setShowNsfw(grChkboxShowNsfw)
                 grTxtPages = self.Civitai.getPages()
-                hasPrev = not self.Civitai.prevPage() is None
-                hasNext = not self.Civitai.nextPage() is None
+                hasPrev = self.Civitai.prevPage() is not None
+                hasNext = self.Civitai.nextPage() is not None
                 # model_names = self.Civitai.getModelNames() if (grChkboxShowNsfw) else self.Civitai.getModelNamesSfw()
                 # HTML = self.Civitai.modelCardsHtml(model_names, self.id)
                 models = self.Civitai.getModels(grChkboxShowNsfw)
