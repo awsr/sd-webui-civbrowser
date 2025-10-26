@@ -951,7 +951,7 @@ class CivitaiModels(APIInformation):
             index = model[1]
             item = self.jsonData['items'][model[1]]
             creator = item["creator"]["username"] if "creator" in item else ""
-            level = item["nsfwLevel"] | (0 if not creator in BanCreators.getAsList() else self.nsfwLevel["Banned"])
+            level = item["nsfwLevel"] | (0 if creator not in BanCreators.getAsList() else self.nsfwLevel["Banned"])
             base_model = ""
             param = {
                 "name": item["name"],
@@ -1066,7 +1066,7 @@ class CivitaiModels(APIInformation):
         infotext += "\n"
         tmpList:list = []
         for key, value in infotextDict.items():
-            if not key in ('Prompt','Negative prompt'):
+            if key not in ('Prompt','Negative prompt'):
                 tmpList.append("{}:{}".format(key,value))
         infotext += ",".join(tmpList)
         return infotext
