@@ -141,11 +141,11 @@ def basemodel_path(baseModel: str) -> Path:
     basemodelPath = ""
     if 'SD 1' not in baseModel:
         basemodelPath = '_' + baseModel.replace(' ', '_').replace('.', '_')
-    return Path(basemodelPath)
+    return Path(sanitize(basemodelPath))
 
 def basemodel_path_all(baseModel: str) -> Path:
     basemodelPath = baseModel.replace(' ', '_').replace('.', '_')
-    return Path(basemodelPath)
+    return Path(sanitize(basemodelPath))
 
 def generate_model_save_path2(type, modelName: str = "", baseModel: str = "", nsfw: bool = False, userName=None, mID=None, vID=None, versionName=None) -> Path:
     # TYPE, MODELNAME, BASEMODEL, NSFW, UPNAME, MODEL_ID, VERSION_ID
