@@ -271,7 +271,7 @@ class APIInformation():
                 print_lc(f"Type options have been updated.\n{diff=}")
             types = newList
         except:
-            print_ly(f'ERROR: Get types')
+            print_ly('ERROR: Get types')
         else:
             # print_lc(f'Set types')
             pass
@@ -366,7 +366,7 @@ class APIInformation():
                 print_lc(f"Base model options have been updated.\n{diff=}")
             APIInformation.basemodelOptions = newList
         except:
-            print_ly(f'ERROR: Get base models')
+            print_ly('ERROR: Get base models')
         else:
             # print_lc(f'Set base models')
             pass
@@ -393,7 +393,7 @@ class APIInformation():
                 print_lc(f"Sort options have been updated.\n{diff=}")
             APIInformation.sortOptions = newList
         except:
-            print_ly(f'ERROR: Get sorts')
+            print_ly('ERROR: Get sorts')
         else:
             # print_lc(f'Set sorts')
             pass
@@ -417,7 +417,7 @@ class APIInformation():
                 print_lc(f"Period options have been updated.\n{diff=}")
             APIInformation.periodOptions = newList
         except:
-            print_ly(f'ERROR: Get periods')
+            print_ly('ERROR: Get periods')
         else:
             # print_lc(f'Set periods')
             pass
@@ -809,7 +809,7 @@ class CivitaiModels(APIInformation):
     def addMetaIID(self, vID:dict, modelInfo:dict) -> dict:
         imagesRes = self.requestImagesByVersionId(vID)
         if self.requestError is not None:
-            print_ly(f"Version ID API Request Error: Fail to get meta info.")
+            print_ly("Version ID API Request Error: Failed to get meta info.")
         if imagesRes is not None:
             IDs = {item["id"]: item["meta"] for item in imagesRes["items"] if 'meta' in item}
             for i, img in enumerate(modelInfo["modelVersions"][0]["images"]):
@@ -1221,7 +1221,7 @@ class CivitaiModels(APIInformation):
             if hasFavorites:
                 api_key=getattr(opts,"civsfz_api_key", None)
                 if api_key is None:
-                    print_ly(f"No API Key.")
+                    print_ly("No API Key.")
                 else:
                     browse.setAPIKey(api_key)
             response = browse.session.get(

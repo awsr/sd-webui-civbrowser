@@ -214,9 +214,9 @@ def save_text_file(folder, filename, trained_words, description:str=""):
     filepath = filepath.with_suffix(".txt")
     overwrite = opts.civsfz_overwrite_metadata_file
     if overwrite:
-        print_n(f"Overwrite allowed in settings")
+        print_n("Overwrite allowed in settings")
     else:
-        print_n(f"Overwrite not allowed in settings")
+        print_n("Overwrite not allowed in settings")
     if not filepath.exists() or overwrite:
         with open(filepath, 'w', encoding='UTF-8') as f:
             f.write(trained_words)
@@ -360,7 +360,7 @@ def open_folder(f):
         if newf == f:
             break
         if count >5:
-            print_lc(f'Not found the folder')
+            print_lc('Folder not found')
             return
         f = newf
     path = os.path.normpath(f)

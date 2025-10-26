@@ -114,7 +114,7 @@ class Downloader:
         html = self.status()
         return html
     def uiDlList(self, gr:gr, every:float=None):
-        grHtmlDlQueue = gr.HTML(elem_id=f"civsfz_download_queue", value=lambda: self.dlHtml(), every=every)
+        grHtmlDlQueue = gr.HTML(elem_id="civsfz_download_queue", value=lambda: self.dlHtml(), every=every)
         return grHtmlDlQueue
 
     def uiJsEvent(self, gr: gr):
@@ -132,11 +132,11 @@ class Downloader:
             if command[0].startswith("CancelDl"):
                 path = Path(command[1])
                 self.sendCancel(path)
-                gr.Info(f"Cancel")
+                gr.Info("Cancel")
             elif command[0].startswith("OpenFolder"):
                 path = Path(command[1])
                 open_folder(path)
-                gr.Info(f"Open folder")
+                gr.Info("Open folder")
             return
 
         grTxtJsEventDl.change(

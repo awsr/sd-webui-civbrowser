@@ -390,13 +390,13 @@ class Components():
 
             grBtnSendWords.click(
                 fn = None,
-                _js=f'(x) => {{civsfz_send2txt2img(x);}}',
+                _js='(x) => {civsfz_send2txt2img(x);}',
                 inputs=[grTxtLoraPrompt],
                 outputs=[],
             )
             grBtnCopyWords.click(
                 fn = None,
-                _js=f'(x) => {{civsfz_send2txt2img(x, send=false);}}',
+                _js='(x) => {civsfz_send2txt2img(x, send=false);}',
                 inputs=[grTxtLoraPrompt],
                 outputs=[],
             )
@@ -710,7 +710,7 @@ class Components():
                 )
                 # print_lc(f"{query=}")
                 if query == "":
-                    gr.Warning(f'Enter a number')
+                    gr.Warning('Enter a number')
                 vIdAsmId = False # 
                 if "Version ID" in grChkbxgrpSearch:
                     if query != "":
@@ -1000,7 +1000,7 @@ class Components():
                     tdDiff = dtNow - dtEndat
                     # print_lc(f'{tdDiff=}')
                     if tdDiff / timedelta(days=1) >= 0:
-                        msg = f"Early Access: expired" # {dtDiff.days}/{grTxtEarlyAccess}
+                        msg = "Early Access: expired" # {dtDiff.days}/{grTxtEarlyAccess}
                     elif tdDiff / timedelta(hours=1) >= -1:
                         msg = f"Early Access: {math.ceil(abs(tdDiff / timedelta(minutes=1)))} minutes left"
                     elif tdDiff / timedelta(hours=1) >= -24:
