@@ -17,7 +17,7 @@ from scripts.civsfz_filemanage import (
     removeFile,
     extensionFolder,
     open_folder,
-    filename_normalization,
+    sanitize,
 )
 
 def print_ly(x): return print(Fore.LIGHTYELLOW_EX +
@@ -45,7 +45,7 @@ class Downloader:
         return Downloader._thread_local.session
 
     def add(self, folder, filename,  url, hash, api_key, early_access):
-        filename = filename_normalization(filename)
+        filename = sanitize(filename)
         if Downloader._threadNum == 0:
             # Clear queue because garbage may remain due to errors that cannot be caught
             Downloader._threadQ.clear()

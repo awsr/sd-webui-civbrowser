@@ -17,7 +17,7 @@ from scripts.civsfz_filemanage import (
     HistoryKwd,
     FavoriteCreators,
     BanCreators,
-    filename_normalization,
+    sanitize,
 )
 from scripts.civsfz_downloader import Downloader
 from scripts.civsfz_color import dictBasemodelColors
@@ -362,7 +362,7 @@ class Components():
                 if self.Civitai.modelIndex is None:
                     return (gr.Textbox.update(value="", visible=False),gr.Button.update(visible=False), gr.Button.update(visible=False))
                 modelType = self.Civitai.getSelectedModelType()
-                filename = filename_normalization(grTxtSaveFilename)
+                filename = sanitize(grTxtSaveFilename)
                 vInfo = self.Civitai.getModelVersionInfo()
                 triggerWords = vInfo.get('trainedWords')
                 wildcard = ""
