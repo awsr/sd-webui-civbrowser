@@ -10,7 +10,7 @@ from pathlib import Path
 from threading import Thread, local
 from time import sleep
 from tqdm import tqdm
-from civsfz_logging import print_lc, print_ly, print_n
+from scripts.civsfz_logging import print_lc, print_ly, print_n
 from scripts.civsfz_shared import opts, calculate_sha256, read_timeout
 from scripts.civsfz_filemanage import (
     makedirs,

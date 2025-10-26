@@ -11,7 +11,7 @@ from collections import deque
 from emoji import replace_emoji
 import pathvalidate as pv
 from modules import  sd_models
-from civsfz_logging import print_lc, print_ly, print_n
+from scripts.civsfz_logging import print_lc, print_ly, print_n
 from scripts.civsfz_shared import cmd_opts, opts, read_timeout
 from modules.paths import models_path
 try:

@@ -14,7 +14,7 @@ from scripts.civsfz_filemanage import (
     isExistFile,
 )
 from scripts.civsfz_color import dictBasemodelColors
-from civsfz_logging import print_lc, print_ly
+from scripts.civsfz_logging import print_lc, print_ly
 from scripts.civsfz_shared import opts, read_timeout
 from jinja2 import Environment, FileSystemLoader
 
