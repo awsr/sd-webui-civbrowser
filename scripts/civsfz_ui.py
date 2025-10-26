@@ -691,7 +691,8 @@ class Components():
                 grDrpdwnID,
                 grchkbxfav,
             ):
-                if grDrpdwnID is not None: grDrpdwnID = str.strip(grDrpdwnID) # Remove spaces
+                if grDrpdwnID is not None:
+                    grDrpdwnID = str.strip(grDrpdwnID) # Remove spaces
                 response = None
                 self.Civitai.clearRequestError()
                 query = self.Civitai.makeRequestQuery(
