@@ -47,7 +47,7 @@ class Downloader:
             Downloader._threadQ.clear()
         path = Path(folder, filename)
         Downloader._ctrlQ.clear() # Clear cancel request
-        if (not any(item['path'] == path  for item in Downloader._dlQ) 
+        if (not any(item['path'] == path  for item in Downloader._dlQ)
             and not any(item['path'] == path for item in Downloader._threadQ)):
             Downloader._dlQ.append({"folder": folder,
                                 "filename": filename,
@@ -179,7 +179,7 @@ class Downloader:
             tokens = re.split(re.escape('\\'), file_name)
             file_name_display = tokens[-1]
             cancel = False
-            exitDownloading = False                
+            exitDownloading = False
             while not exitDownloading:
                 # Send a GET request to the URL and save the response to the local file
                 try:
@@ -280,7 +280,7 @@ class Downloader:
                     print_lc(f'Canceled : {file_name_display}')
                     # gr.Warning(f"Canceled: {file_name_display}")
                 if os.path.exists(file_name):
-                    removeFile(file_name)                
+                    removeFile(file_name)
             else:
                 if os.path.exists(file_name):
                     # downloaded_size = os.path.getsize(file_name)

@@ -45,7 +45,7 @@ img_dummy = {
 
 class Browser:
     session = None
-    
+
     def __init__(self):
         if Browser.session is None:
             Browser.session = requests.Session()
@@ -85,7 +85,7 @@ class ModelCardsPagination:
                  'prevUrl': None
                 }
         self.pages.append(page)
-    
+
     def getNextUrl(self) -> str:
         return self.pages[self.currentPage-1]['nextUrl']
     def getPrevUrl(self) -> str:
@@ -112,7 +112,7 @@ class ModelCardsPagination:
         self.pages = pagination['pages']
         self.currentPage = pagination['currentPage']
         self.pageSize = pagination['pageSize']
-    
+
     def nextPage(self, response:dict) -> None:
         prevUrl = self.pages[self.currentPage-1]['url']
         page = { 'url': response['requestUrl'],
@@ -177,7 +177,7 @@ class APIInformation():
                  "XXX": 16,
                  #"Blocked":  32,
                  "Banned":  256,
-                 } 
+                 }
     def __init__(self) -> None:
         if APIInformation.typeOptions is None:
             self.getOptions()
@@ -500,7 +500,7 @@ class CivitaiModels(APIInformation):
     # Models
     def getModels(self, showNsfw = False) -> list:
         '''Return: [(str: Model name, str: index)]'''
-        model_list = [] 
+        model_list = []
         for index, item in enumerate(self.jsonData['items']):
             # print_lc(
             #    f"{item['nsfwLevel']}-{item['nsfwLevel'] & sum(opts.civsfz_browsing_level)}-{opts.civsfz_browsing_level}")
@@ -600,7 +600,7 @@ class CivitaiModels(APIInformation):
         return item['type']
     def getModelTypeByIndex(self, index:int) -> str:
         item = self.jsonData['items'][index]
-        return item['type'] 
+        return item['type']
     def getUserName(self):
         item = self.jsonData['items'][self.modelIndex]
         return item['creator']['username'] if 'creator' in item else ""
@@ -628,7 +628,7 @@ class CivitaiModels(APIInformation):
                 allowDerivatives = item['allowDerivatives']
                 allowDifferentLicense = item['allowDifferentLicense']
 
-                canSellImages = len(allowCommercialUse & canSellImagesPermissions) > 0 
+                canSellImages = len(allowCommercialUse & canSellImagesPermissions) > 0
                 canRentCivit = len(allowCommercialUse & canRentCivitPermissions) > 0
                 canRent = len(allowCommercialUse & canRentPermissions) > 0
                 canSell = len(allowCommercialUse & canSellPermissions) > 0
@@ -720,7 +720,7 @@ class CivitaiModels(APIInformation):
         return self.versionIndex
     def selectVersionByName(self, name:str) -> int:
         '''Select model version by name. Select model first.
-        
+
         Args:
             ID (int): version ID
         Returns:
@@ -999,7 +999,7 @@ class CivitaiModels(APIInformation):
                             param['imgsrc'] = img["url"]
                             if img['nsfwLevel'] > 1 and not self.isShowNsfw():
                                 param['isNsfw'] = True
-                        if self.matchLevel(img['nsfwLevel'],  nsfwLevel): 
+                        if self.matchLevel(img['nsfwLevel'],  nsfwLevel):
                             # img  = item['modelVersions'][0]['images'][0]
                             param['imgType'] = img['type']
                             param['imgsrc'] = img["url"]
@@ -1171,7 +1171,7 @@ class CivitaiModels(APIInformation):
         return content
 
     # REST API
-    def makeRequestQuery(self, content_type, sort_type, period, search_type, base_models=None, grChkboxShowNsfw=False, 
+    def makeRequestQuery(self, content_type, sort_type, period, search_type, base_models=None, grChkboxShowNsfw=False,
             grDrpdwnKeyword="",
             grDrpdwnUserName="",
             grDrpdwnTag="",
@@ -1201,7 +1201,7 @@ class CivitaiModels(APIInformation):
             query = {'types': content_type, 'sort': sort_type,
                      'limit': opts.civsfz_number_of_cards, 'page': 1, 'nsfw': grChkboxShowNsfw}
             if not period == "AllTime":
-                query |= {'period': period}   
+                query |= {'period': period}
             if "User name" in search_type:
                 query |= {'username': grDrpdwnUserName }
             if "Tag" in search_type:

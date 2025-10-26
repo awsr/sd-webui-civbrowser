@@ -408,7 +408,7 @@ class Components():
                     blClr = False
                 else:
                     _blFav = grTxtCreator not in FavoriteCreators.getAsList()
-                    _blBan = grTxtCreator not in BanCreators.getAsList() 
+                    _blBan = grTxtCreator not in BanCreators.getAsList()
                     blFav = _blFav and _blBan
                     blBan = _blFav and _blBan
                     blClr = not (blFav and blBan)
@@ -712,7 +712,7 @@ class Components():
                 # print_lc(f"{query=}")
                 if query == "":
                     gr.Warning('Enter a number')
-                vIdAsmId = False # 
+                vIdAsmId = False #
                 if "Version ID" in grChkbxgrpSearch:
                     if query != "":
                         url = self.Civitai.getVersionsApiUrl(query)
@@ -824,7 +824,7 @@ class Components():
                 hasNext = self.Civitai.nextPage() is not None
                 if hasNext:
                     url = self.Civitai.nextPage()
-                    thread = threading.Thread(target=self.Civitai.requestApi, args=(url,), kwargs= {"timeout": read_timeout()}) 
+                    thread = threading.Thread(target=self.Civitai.requestApi, args=(url,), kwargs= {"timeout": read_timeout()})
                     thread.start()
 
             grBtnGetListAPI.click(
@@ -1028,7 +1028,7 @@ class Components():
             )
 
             def file_exist_check(grTxtSaveFolder, grDrpdwnSelectFile):
-                isExist = isExistFile(grTxtSaveFolder, grDrpdwnSelectFile)            
+                isExist = isExistFile(grTxtSaveFolder, grDrpdwnSelectFile)
                 return gr.HTML.update(visible = True if isExist else False)
             grTxtDlUrl.change(
                 fn=file_exist_check,

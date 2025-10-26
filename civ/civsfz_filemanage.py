@@ -20,7 +20,7 @@ try:
 except ImportError:
     print("Recycle bin cannot be used.")
     send2trash_installed = False
-    
+
 
 isDownloading = False
 ckpt_dir = cmd_opts.ckpt_dir or sd_models.model_path
@@ -36,7 +36,7 @@ def cut_name(s:str):
     MAX_FILENAME_LENGTH = 246
     l = name_len(s)
     #print_lc(f'filename length:{len(s.encode("utf-8"))}-{len(s.encode("utf-16"))}')
-    while l >= MAX_FILENAME_LENGTH: 
+    while l >= MAX_FILENAME_LENGTH:
         s = s[:-1]
         l = name_len(s)
     return s
@@ -77,7 +77,7 @@ def type_path(type: str) -> Path:
                 print_ly(f'Check subfolder setting: {e}')
             folderSetting = {}
     else:
-        folderSetting = {}       
+        folderSetting = {}
     pre_opt_folder = opts.civsfz_save_type_folders
     base = models_path
     if type == "Checkpoint":
@@ -465,8 +465,8 @@ class SearchHistory(History):
         if word in FavoriteCreators.getAsList():
             return
         d = { "type" : type,
-                "word": word }  
-        try:                  
+                "word": word }
+        try:
             self._history.remove(d)
         except:
             pass
@@ -497,7 +497,7 @@ class ConditionsHistory(History):
             "baseModels": baseModels,
             "nsfw": nsfw
         }
-        try:                  
+        try:
             self._history.remove(d)
         except:
             pass
