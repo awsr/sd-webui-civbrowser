@@ -26,6 +26,23 @@ environment = Environment(
     extensions=["jinja2.ext.loopcontrols"],
 )
 
+img_dummy = {
+    "url": None,
+    "nsfwLevel": 0,
+    "width": 512,
+    "height": 512,
+    "hash": None,
+    "type": "image",
+    "minor": False,
+    "poi": False,
+    "hasMeta": False,
+    "hasPositivePrompt": False,
+    "onSite": False,
+    "remixOfId": None,
+    "id": 0
+}
+
+
 class Browser:
     session = None
     
@@ -813,7 +830,7 @@ class CivitaiModels(APIInformation):
         if imagesRes is not None:
             IDs = {item["id"]: item["meta"] for item in imagesRes["items"] if 'meta' in item}
             for i, img in enumerate(modelInfo["modelVersions"][0]["images"]):
-                if 'id' not in img:
+                if 'id' not in img and img["url"] is not None:
                     # Extract image ID from url
                     id = re.findall(r'/(\d+)\.\w+$', img['url'])
                     # print_lc(f'{img["url"]}   {id=}')
@@ -852,7 +869,10 @@ class CivitaiModels(APIInformation):
         modelInfo["allow"]["allowDifferentLicense"] = item["allowDifferentLicense"]
         modelInfo["modelVersions"] = [version]
         modelInfo["modelVersions"][0]["files"] = version["files"]
-        modelInfo["modelVersions"][0]["images"] = version["images"]
+        try:
+            modelInfo["modelVersions"][0]["images"] = version["images"]
+        except KeyError:
+            modelInfo["modelVersions"][0]["images"] = [img_dummy] # make list
         # add version info
         modelInfo['versionId'] = version['id']
         modelInfo['versionName'] = version['name']
@@ -972,19 +992,22 @@ class CivitaiModels(APIInformation):
             if any(item['modelVersions']):
                 # if len(item['modelVersions'][0]['images']) > 0:
                 # default image
-                for i, img in enumerate(item['modelVersions'][0]['images']):
-                    if i == 0: # 0 as default
-                        param['imgType'] = img['type']
-                        param['imgsrc'] = img["url"]
-                        if img['nsfwLevel'] > 1 and not self.isShowNsfw():
-                            param['isNsfw'] = True
-                    if self.matchLevel(img['nsfwLevel'],  nsfwLevel): 
-                        # img  = item['modelVersions'][0]['images'][0]
-                        param['imgType'] = img['type']
-                        param['imgsrc'] = img["url"]
-                        if img['nsfwLevel'] > 1 and not self.isShowNsfw():
-                            param['isNsfw'] = True
-                        break
+                try:
+                    for i, img in enumerate(item['modelVersions'][0]['images']):
+                        if i == 0: # 0 as default
+                            param['imgType'] = img['type']
+                            param['imgsrc'] = img["url"]
+                            if img['nsfwLevel'] > 1 and not self.isShowNsfw():
+                                param['isNsfw'] = True
+                        if self.matchLevel(img['nsfwLevel'],  nsfwLevel): 
+                            # img  = item['modelVersions'][0]['images'][0]
+                            param['imgType'] = img['type']
+                            param['imgsrc'] = img["url"]
+                            if img['nsfwLevel'] > 1 and not self.isShowNsfw():
+                                param['isNsfw'] = True
+                            break
+                except KeyError:
+                    pass
                 base_model = item["modelVersions"][0]['baseModel']
                 param['baseModel'] = base_model
 
