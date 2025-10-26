@@ -661,7 +661,7 @@ class CivitaiModels(APIInformation):
         return info
 
     def checkAlreadyHave(self, index:int=None) -> list[bool]:
-        if index == None:
+        if index is None:
             index = self.modelIndex
         item = self.jsonData["items"][index]
         hasVersions = []
@@ -1276,7 +1276,7 @@ class CivitaiModels(APIInformation):
         return data
 
     def requestImagesByVersionId(self, versionId=None, limit=None):
-        if versionId == None:
+        if versionId is None:
             return None
         params = {"modelVersionId": versionId,
                   "sort": "Oldest",
@@ -1285,7 +1285,7 @@ class CivitaiModels(APIInformation):
             params |= {"limit": limit}
         return self.requestApi(self.getImagesApiUrl(), params, timeout=read_timeout())
     def requestVersionByVersionID(self, versionID=None):
-        if versionID == None:
+        if versionID is None:
             return None
         url = self.getVersionsApiUrl(versionID)
         ret = self.requestApi(url, timeout=read_timeout())

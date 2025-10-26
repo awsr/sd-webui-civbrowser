@@ -385,7 +385,7 @@ class History():
     def __init__(self, path=None):
         self._path = Path.joinpath(
             extensionFolder(), Path("../history.json"))
-        if path != None:
+        if path is not None:
             self._path = path
         self._history: deque = self.load()
     def load(self) -> list[dict]:
@@ -417,7 +417,7 @@ class KeywordHistory(History):
         )
 
     def add(self, type="Keyword", word=None):
-        if type == "No" or word == "" or word == None:
+        if type == "No" or word == "" or word is None:
             return
         if type == "User name" and word in FavoriteCreators.getAsList():
             return
@@ -460,7 +460,7 @@ class SearchHistory(History):
             extensionFolder(), Path("../search_history.json")))
         self._delimiter = "_._"
     def add(self, type, word):
-        if type == "No" or word == "" or word == None:
+        if type == "No" or word == "" or word is None:
             return
         if word in FavoriteCreators.getAsList():
             return
@@ -519,7 +519,7 @@ HistoryC = ConditionsHistory()
 class UserInfo:
     def __init__(self, path=None):
         self._path = Path.joinpath(extensionFolder(), Path("../users.json"))
-        if path != None:
+        if path is not None:
             self._path = path
         self._users: list = self.load()
 
