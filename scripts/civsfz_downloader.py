@@ -3,7 +3,6 @@ import math
 import os
 import re
 import requests
-from colorama import Fore, Back, Style
 from collections import deque
 from datetime import datetime, timedelta, timezone
 from jinja2 import Environment, FileSystemLoader
@@ -11,6 +10,7 @@ from pathlib import Path
 from threading import Thread, local
 from time import sleep
 from tqdm import tqdm
+from civsfz_logging import print_lc, print_ly, print_n
 from scripts.civsfz_shared import opts, calculate_sha256, read_timeout
 from scripts.civsfz_filemanage import (
     makedirs,
@@ -20,11 +20,6 @@ from scripts.civsfz_filemanage import (
     sanitize,
 )
 
-def print_ly(x): return print(Fore.LIGHTYELLOW_EX +
-                              "CivBrowser: " + x + Style.RESET_ALL)
-def print_lc(x): return print(Fore.LIGHTCYAN_EX +
-                              "CivBrowser: " + x + Style.RESET_ALL)
-def print_n(x): return print("CivBrowser: " + x)
 
 class Downloader:
     _dlQ = deque()  # Download

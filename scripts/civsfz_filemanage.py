@@ -11,7 +11,7 @@ from collections import deque
 from emoji import replace_emoji
 import pathvalidate as pv
 from modules import  sd_models
-from colorama import Fore, Back, Style
+from civsfz_logging import print_lc, print_ly, print_n
 from scripts.civsfz_shared import cmd_opts, opts, read_timeout
 from modules.paths import models_path
 try:
@@ -20,10 +20,7 @@ try:
 except ImportError:
     print("Recycle bin cannot be used.")
     send2trash_installed = False
-
-print_ly = lambda  x: print(Fore.LIGHTYELLOW_EX + "CivBrowser: " + x + Style.RESET_ALL )
-print_lc = lambda  x: print(Fore.LIGHTCYAN_EX + "CivBrowser: " + x + Style.RESET_ALL )
-print_n = lambda  x: print("CivBrowser: " + x )
+    
 
 isDownloading = False
 ckpt_dir = cmd_opts.ckpt_dir or sd_models.model_path

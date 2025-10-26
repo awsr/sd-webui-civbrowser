@@ -7,7 +7,6 @@ import re
 from html.parser import HTMLParser
 from datetime import datetime, timedelta, timezone
 from modules import script_callbacks, ui_components
-from colorama import Fore, Back, Style
 from scripts.civsfz_shared import VERSION, GR_V440, cmd_opts, opts, read_timeout, HTML2txt
 from scripts.civsfz_api import CivitaiModels
 from scripts.civsfz_filemanage import (
@@ -22,10 +21,6 @@ from scripts.civsfz_filemanage import (
 from scripts.civsfz_downloader import Downloader
 from scripts.civsfz_color import dictBasemodelColors
 
-
-print_ly = lambda  x: print(Fore.LIGHTYELLOW_EX + "CivBrowser: " + x + Style.RESET_ALL )
-print_lc = lambda  x: print(Fore.LIGHTCYAN_EX + "CivBrowser: " + x + Style.RESET_ALL )
-print_n = lambda  x: print("CivBrowser: " + x )
 
 class Components():
     newid = itertools.count()

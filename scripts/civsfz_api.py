@@ -6,7 +6,6 @@ import urllib.parse
 from pathlib import Path
 import requests
 # from requests_cache import CachedSession
-from colorama import Fore, Back, Style
 from scripts.civsfz_filemanage import (
     generate_model_save_path2,
     extensionFolder,
@@ -15,12 +14,10 @@ from scripts.civsfz_filemanage import (
     isExistFile,
 )
 from scripts.civsfz_color import dictBasemodelColors
+from civsfz_logging import print_lc, print_ly
 from scripts.civsfz_shared import opts, read_timeout
 from jinja2 import Environment, FileSystemLoader
 
-print_ly = lambda  x: print(Fore.LIGHTYELLOW_EX + "CivBrowser: " + x + Style.RESET_ALL )
-print_lc = lambda  x: print(Fore.LIGHTCYAN_EX + "CivBrowser: " + x + Style.RESET_ALL )
-print_n = lambda  x: print("CivBrowser: " + x )
 
 templatesPath = Path.joinpath(
     extensionFolder(), Path("../templates"))
