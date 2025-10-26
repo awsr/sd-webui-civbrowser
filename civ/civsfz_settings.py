@@ -1,13 +1,13 @@
 import gradio as gr
 from modules import script_callbacks, shared, ui_components
-from scripts.civsfz_color import BaseModelColors, familyColor
+from civ.civsfz_color import BaseModelColors, familyColor
 
 # SD.Next can not import from civsfz_shared.py
 GR_V440 = True if "4.40" in gr.__version__ else False
 
 def on_ui_settings():
-    from scripts.civsfz_shared import platform
-    from scripts.civsfz_api import APIInformation
+    from civ.civsfz_shared import platform
+    from civ.civsfz_api import APIInformation
 
     class myOption(shared.OptionInfo):
         def __init__(self, text, **kwargs):

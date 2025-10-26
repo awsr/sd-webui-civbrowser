@@ -1,5 +1,5 @@
 import colorsys
-from scripts.civsfz_shared import opts
+from civ.civsfz_shared import opts
 
 
 def hex_color_hsl_to_rgb(h, s, l):

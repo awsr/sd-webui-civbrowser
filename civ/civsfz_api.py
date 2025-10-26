@@ -6,16 +6,16 @@ import urllib.parse
 from pathlib import Path
 import requests
 # from requests_cache import CachedSession
-from scripts.civsfz_filemanage import (
+from civ.civsfz_filemanage import (
     generate_model_save_path2,
     extensionFolder,
     FavoriteCreators,
     BanCreators,
     isExistFile,
 )
-from scripts.civsfz_color import dictBasemodelColors
-from scripts.civsfz_logging import print_lc, print_ly
-from scripts.civsfz_shared import opts, read_timeout
+from civ.civsfz_color import dictBasemodelColors
+from civ.civsfz_logging import print_lc, print_ly
+from civ.civsfz_shared import opts, read_timeout
 from jinja2 import Environment, FileSystemLoader
 
 

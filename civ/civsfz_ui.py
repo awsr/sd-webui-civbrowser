@@ -7,9 +7,9 @@ import re
 from html.parser import HTMLParser
 from datetime import datetime, timedelta, timezone
 from modules import script_callbacks, ui_components
-from scripts.civsfz_shared import VERSION, GR_V440, cmd_opts, opts, read_timeout, HTML2txt
-from scripts.civsfz_api import CivitaiModels
-from scripts.civsfz_filemanage import (
+from civ.civsfz_shared import VERSION, GR_V440, cmd_opts, opts, read_timeout, HTML2txt
+from civ.civsfz_api import CivitaiModels
+from civ.civsfz_filemanage import (
     open_folder,
     HistoryS,
     HistoryC,
@@ -18,8 +18,8 @@ from scripts.civsfz_filemanage import (
     BanCreators,
     sanitize,
 )
-from scripts.civsfz_downloader import Downloader
-from scripts.civsfz_color import dictBasemodelColors
+from civ.civsfz_downloader import Downloader
+from civ.civsfz_color import dictBasemodelColors
 
 
 class Components():
@@ -27,7 +27,7 @@ class Components():
     downloader = None
     def __init__(self, downloader:Downloader, tab=None):
         '''id: Event ID for javascrypt'''
-        from scripts.civsfz_filemanage import generate_model_save_path2, isExistFile, \
+        from civ.civsfz_filemanage import generate_model_save_path2, isExistFile, \
             save_text_file, saveImageFiles
         Components.downloader = downloader
         self.gr_version = gr.__version__
