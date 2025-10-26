@@ -45,6 +45,7 @@ class Downloader:
         return Downloader._thread_local.session
 
     def add(self, folder, filename,  url, hash, api_key, early_access):
+        folder = sanitize(folder)
         filename = sanitize(filename)
         if Downloader._threadNum == 0:
             # Clear queue because garbage may remain due to errors that cannot be caught
