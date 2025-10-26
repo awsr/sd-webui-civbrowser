@@ -943,6 +943,7 @@ class Components():
                         gr.Textbox.update(value=None),
                         gr.Textbox.update(value=None),
                         gr.HTML.update(value=None),
+                        gr.Textbox.update(value=None)
                     )
             grRadioVersions.change(
                 fn=update_model_info,
