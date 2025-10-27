@@ -41,6 +41,10 @@ def cut_name(s:str):
         l = name_len(s)
     return s
 
+def sanitize(path: str) -> str:
+    path = pv.sanitize_filepath(replace_emoji(path))
+    path = re.sub(r"__+", "_", path)
+    return path
 
 def escaped_filename(model_name):
     escapechars = str.maketrans({   " ": r"_",
@@ -194,11 +198,6 @@ def generate_model_save_path2(type, modelName: str = "", baseModel: str = "", ns
     modelPath = type_path(type).joinpath(
         "/".join(newTreeList))
     return modelPath
-
-def sanitize(path: str) -> str:
-    path = pv.sanitize_filepath(replace_emoji(path))
-    path = re.sub(r"__+", "_", path)
-    return path
 
 def save_text_file(folder, filename, trained_words, description:str=""):
     filename = sanitize(filename)
