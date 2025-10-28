@@ -133,15 +133,15 @@ class Components():
                     elem_id=f"civsfz_search_tag{self.id}",
                     tooltip="Enter a tag or choose from your history",
                 )
-                grSearchID = gr.Dropdown(
+                grSearchID = gr.Textbox(
                     scale=0,
                     label="ID/Hash",
-                    choices=HistoryKwd.getAsChoices("ID"),
-                    type="value",
+                    type="text",
+                    lines=1,
+                    max_lines=1,
                     visible=False,
-                    allow_custom_value=True,
                     elem_id=f"civsfz_search_id{self.id}",
-                    tooltip="Enter the number or choose from your history",
+                    tooltip="Enter the number/hash",
                 )
 
             with gr.Column(elem_id=f"civsfz_model-navigation{self.id}"):
