@@ -103,7 +103,7 @@ class Components():
                     tooltip="Search for models liked on civitai",
                 )
             with gr.Row():
-                grDrpdwnKeyword = gr.Dropdown(
+                grSearchKeyword = gr.Dropdown(
                     scale=0,
                     label="Keyword",
                     choices=HistoryKwd.getAsChoices("Keyword"),
@@ -113,7 +113,7 @@ class Components():
                     elem_id=f"civsfz_search_keyword{self.id}",
                     tooltip="Enter a search term or choose from your history",
                 )
-                grDrpdwnUserName = gr.Dropdown(
+                grSearchUserName = gr.Dropdown(
                     scale=0,
                     label="User Name",
                     choices=HistoryKwd.getAsChoices("User name"),
@@ -123,7 +123,7 @@ class Components():
                     elem_id=f"civsfz_search_user{self.id}",
                     tooltip="Enter a user name or choose from your history and favorites",
                 )
-                grDrpdwnTag = gr.Dropdown(
+                grSearchTag = gr.Dropdown(
                     scale=0,
                     label="Tag",
                     choices=HistoryKwd.getAsChoices("Tag"),
@@ -133,7 +133,7 @@ class Components():
                     elem_id=f"civsfz_search_tag{self.id}",
                     tooltip="Enter a tag or choose from your history",
                 )
-                grDrpdwnID = gr.Dropdown(
+                grSearchID = gr.Dropdown(
                     scale=0,
                     label="ID/Hash",
                     choices=HistoryKwd.getAsChoices("ID"),
@@ -447,7 +447,7 @@ class Components():
                 inputs=[grTxtCreator],
                 outputs=[grBtnAddFavorite, grBtnAddBan, grBtnClearUser],
             ).then(
-                fn=updateSearchTermChoices, inputs=[], outputs=[grDrpdwnUserName]
+                fn=updateSearchTermChoices, inputs=[], outputs=[grSearchUserName]
             )
             grBtnAddBan.click(
                 fn=addBan,
@@ -458,7 +458,7 @@ class Components():
                 fn=clearUser,
                 inputs=[grTxtCreator],
                 outputs=[grBtnAddFavorite, grBtnAddBan, grBtnClearUser],
-            ).then(fn=updateSearchTermChoices, inputs=[], outputs=[grDrpdwnUserName])
+            ).then(fn=updateSearchTermChoices, inputs=[], outputs=[grSearchUserName])
 
             def save_image_files(grTxtSaveFolder, grTxtSaveFilename, grTxtLoraPrompt, grHtmlModelInfo):
                 modelInfo = self.Civitai.getModelVersionInfo()
@@ -556,10 +556,10 @@ class Components():
                 term = grDrpdwnUserName.removeprefix('⭐️')
                 return gr.CheckboxGroup.update(value=term)
 
-            grDrpdwnUserName.select(
+            grSearchUserName.select(
                 fn=selectUserHistory,
-                inputs=[grDrpdwnUserName],
-                outputs=[grDrpdwnUserName],
+                inputs=[grSearchUserName],
+                outputs=[grSearchUserName],
             )
 
             def selectCHistory(grDrpdwnHistory):
@@ -669,10 +669,10 @@ class Components():
                 inputs=[grChkbxgrpSearch],
                 outputs=[
                     grChkbxgrpSearch,
-                    grDrpdwnKeyword,
-                    grDrpdwnUserName,
-                    grDrpdwnTag,
-                    grDrpdwnID,
+                    grSearchKeyword,
+                    grSearchUserName,
+                    grSearchTag,
+                    grSearchID,
                 ],
             )
 
@@ -838,10 +838,10 @@ class Components():
                     grDrpdwnPeriod,
                     grDrpdwnBasemodels,
                     grChkbxgrpLevel,
-                    grDrpdwnKeyword,
-                    grDrpdwnUserName,
-                    grDrpdwnTag,
-                    grDrpdwnID,
+                    grSearchKeyword,
+                    grSearchUserName,
+                    grSearchTag,
+                    grSearchID,
                     grchkbxfav,
                 ],
                 outputs=[
@@ -856,10 +856,10 @@ class Components():
                     # grDropdownSearchTerm,
                     grDrpdwnCHistory,
                     grTxtCreator,
-                    grDrpdwnKeyword,
-                    grDrpdwnUserName,
-                    grDrpdwnTag,
-                    grDrpdwnID,
+                    grSearchKeyword,
+                    grSearchUserName,
+                    grSearchTag,
+                    grSearchID,
                 ],
             ).then(  # for custum settings
                 fn=updatePropertiesText, inputs=[], outputs=[grTxtProperties]
