@@ -467,10 +467,17 @@ class CivitaiModels(APIInformation):
     def getJsonData(self) -> dict:
         return self.jsonData
 
-    def setShowNsfw(self, showNsfw:bool):
-        self.showNsfw = showNsfw
-    def isShowNsfw(self) -> bool:
-        return self.showNsfw
+    @property
+    def show_nsfw(self):
+        return self._show_nsfw
+    
+    @show_nsfw.setter
+    def show_nsfw(self, value: bool):
+        try:
+            self._show_nsfw = bool(value)
+        except Exception:
+            pass
+
     # def setContentType(self, content_type:str):
     #    self.contentType = content_type
     # def getContentType(self) -> str:
@@ -997,13 +1004,13 @@ class CivitaiModels(APIInformation):
                         if i == 0: # 0 as default
                             param['imgType'] = img['type']
                             param['imgsrc'] = img["url"]
-                            if img['nsfwLevel'] > 1 and not self.isShowNsfw():
+                            if img['nsfwLevel'] > 1 and not self._show_nsfw:
                                 param['isNsfw'] = True
                         if self.matchLevel(img['nsfwLevel'],  nsfwLevel):
                             # img  = item['modelVersions'][0]['images'][0]
                             param['imgType'] = img['type']
                             param['imgsrc'] = img["url"]
-                            if img['nsfwLevel'] > 1 and not self.isShowNsfw():
+                            if img['nsfwLevel'] > 1 and not self._show_nsfw:
                                 param['isNsfw'] = True
                             break
                 except KeyError:

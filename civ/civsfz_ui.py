@@ -786,7 +786,7 @@ class Components():
                 if err is None:
                     self.Civitai.addFirstPage(response, grChkbxGrpContentType, grDrpdwnSortType, grChkbxgrpSearch,
                                               "search", grChkboxShowNsfw, grDrpdwnPeriod, grDrpdwnBasemodels)
-                self.Civitai.setShowNsfw(grChkboxShowNsfw)
+                self.Civitai.show_nsfw = grChkboxShowNsfw
                 grTxtPages = self.Civitai.getPages()
                 hasPrev = self.Civitai.prevPage() is not None
                 hasNext = self.Civitai.nextPage() is not None
@@ -1052,7 +1052,7 @@ class Components():
                 if err is None:
                     self.Civitai.addNextPage(
                         response) if isNext else self.Civitai.backPage(response)
-                self.Civitai.setShowNsfw(grChkboxShowNsfw)
+                self.Civitai.show_nsfw = grChkboxShowNsfw
                 grTxtPages = self.Civitai.getPages()
                 hasPrev = self.Civitai.prevPage() is not None
                 hasNext = self.Civitai.nextPage() is not None
@@ -1125,7 +1125,7 @@ class Components():
                 self.Civitai.updateJsonData(response)
                 if err is None:
                     self.Civitai.pageJump(response,grSldrPage)
-                self.Civitai.setShowNsfw(grChkboxShowNsfw)
+                self.Civitai.show_nsfw = grChkboxShowNsfw
                 grTxtPages = self.Civitai.getPages()
                 hasPrev = self.Civitai.prevPage() is not None
                 hasNext = self.Civitai.nextPage() is not None
