@@ -1,5 +1,6 @@
 import re
 import datetime
+from typing import Any, TYPE_CHECKING
 from dateutil import tz
 import json
 import urllib.parse
@@ -90,11 +91,12 @@ class ModelCardsPagination:
         return self.pages[self.currentPage-1]['nextUrl']
     def getPrevUrl(self) -> str:
         return self.pages[self.currentPage-1]['prevUrl']
-    def getJumpUrl(self, page) -> str:
+    def getJumpUrl(self, page) -> str | None:
         if page <= len(self.pages):
             return self.pages[page-1]['url']
         else:
             return None
+
     def getPagination(self):
         ret = { "types": self.types,
                 "sort": self.sort,
@@ -108,12 +110,16 @@ class ModelCardsPagination:
                 "pages": self.pages
                }
         return ret
-    def setPagination(self, pagination:dict):
+
+    def setPagination(self, pagination: dict):
         self.pages = pagination['pages']
+        if TYPE_CHECKING:
+            assert isinstance(pagination["currentPage"], int)
+            assert isinstance(pagination["pageSize"], int)
         self.currentPage = pagination['currentPage']
         self.pageSize = pagination['pageSize']
 
-    def nextPage(self, response:dict) -> None:
+    def nextPage(self, response: dict) -> None:
         prevUrl = self.pages[self.currentPage-1]['url']
         page = { 'url': response['requestUrl'],
                  'nextUrl': response['metadata']['nextPage'] if 'nextPage' in response['metadata'] else None,
@@ -157,10 +163,10 @@ class APIInformation():
     imagesApi = f"{baseUrl}/api/v1/images"
     versionsAPI = f"{baseUrl}/api/v1/model-versions"
     byHashAPI = f"{baseUrl}/api/v1/model-versions/by-hash"
-    typeOptions:list = None
-    sortOptions:list = None
-    basemodelOptions:list = None
-    periodOptions:list = None
+    typeOptions:list | None = None
+    sortOptions:list |  None = None
+    basemodelOptions:list | None = None
+    periodOptions:list | None = None
     searchTypes = [
         "No",
         "Keyword",
@@ -433,7 +439,7 @@ class APIInformation():
             if len(diff) != 0:
                 print_lc(f"Period options have been updated.\n{diff=}")
             APIInformation.periodOptions = newList
-        except:
+        except Exception:
             print_ly('ERROR: Get periods')
         else:
             # print_lc(f'Set periods')
@@ -441,12 +447,14 @@ class APIInformation():
 
 class CivitaiModels(APIInformation):
     '''CivitaiModels: Handle the response of civitai models api v1.'''
-    def __init__(self, url:str=None, json_data:dict=None, content_type:str=None):
+
+    def __init__(self, url: str = "", json_data: dict = {}, content_type: str = None):
         super().__init__()
         self.jsonData = json_data
         # self.contentType = content_type
         self.showNsfw = False
-        self.baseUrl = APIInformation.baseUrl if url is None else url
+        self._show_nsfw = False
+        self.baseUrl = APIInformation.baseUrl if not url else url
         self.modelIndex = None
         self.versionsInfo = None    # for radio button and file exist check
         self.versionIndex = None
@@ -454,7 +462,8 @@ class CivitaiModels(APIInformation):
         self.requestError = None
         self.saveFolder = None
         self.cardPagination = None
-    def updateJsonData(self, json_data:dict=None, content_type:str=None):
+
+    def updateJsonData(self, json_data: dict = {}, content_type: str = None):
         '''Update json data.'''
         self.jsonData = json_data
         # self.contentType = self.contentType if content_type is None else content_type
@@ -551,7 +560,7 @@ class CivitaiModels(APIInformation):
             print_err(e)
             return ""
     def isNsfwModelByID(self, id:int) -> bool:
-        nsfw = None
+        nsfw = False
         for item in self.jsonData['items']:
             if int(item['id']) == int(id):
                 nsfw = item['nsfw']
@@ -573,25 +582,27 @@ class CivitaiModels(APIInformation):
             # print(f'{name} - {self.modelIndex}')
         return self.modelIndex
     def isNsfwModel(self) -> bool:
-        return self.jsonData['items'][self.modelIndex]['nsfw']
+        try:
+            return self.jsonData['items'][self.modelIndex]['nsfw']
+        except Exception as e:
+            print_err(e)
+            return False
     def treatAsNsfw(self, modelIndex=None, versionIndex=None):
         modelIndex = self.modelIndex if modelIndex is None else modelIndex
         modelIndex = 0 if modelIndex is None else modelIndex
         versionIndex = self.versionIndex if versionIndex is None else versionIndex
         versionIndex = 0 if versionIndex is None else versionIndex
-        ret = self.jsonData['items'][modelIndex]['nsfw']
         if opts.civsfz_treat_x_as_nsfw:
             try:
-                picNsfw = self.jsonData['items'][modelIndex]['modelVersions'][versionIndex]['images'][0]['nsfwLevel']
-            except Exception as e:
+                return self.jsonData['items'][modelIndex]['modelVersions'][versionIndex]['images'][0]['nsfwLevel'] > 1
+            except Exception:
                 # print_ly(f'{e}')
                 pass
-            else:
-                # print_lc(f'{picNsfw}')
-                if picNsfw > 1:
-                    ret = True
-        return ret
-    def getIndexByModelName(self, name:str) -> int:
+        try:
+            return self.jsonData['items'][modelIndex]['nsfw']
+        except Exception:
+            return False
+    def getIndexByModelName(self, name:str) -> int | None:
         retIndex = None
         if name is not None:
             for index, item in enumerate(self.jsonData['items']):
@@ -788,7 +799,10 @@ class CivitaiModels(APIInformation):
     def getPublishedDatetime(self) -> datetime.datetime | None:
         item = self.jsonData['items'][self.modelIndex]
         version_dict = item['modelVersions'][self.versionIndex]
-        if version_dict['publishedAt'] is None:
+        try:
+            if version_dict['publishedAt'] is None:
+                return None
+        except KeyError:
             return None
         if version_dict['publishedAt'][-1] == "Z":
             strPublishedAt = version_dict['publishedAt'].replace(
@@ -889,13 +903,11 @@ class CivitaiModels(APIInformation):
         modelInfo['versionName'] = version['name']
         # modelInfo['createdAt'] = version['createdAt']
         # modelInfo['updatedAt'] = version['updatedAt']
-        modelInfo['publishedAt'] = version['publishedAt']
+        modelInfo['publishedAt'] = version['publishedAt']if 'publishedAt' in version else ""
         modelInfo['trainedWords'] = version['trainedWords'] if 'trainedWords' in version else ""
         modelInfo['baseModel'] = version['baseModel']
         modelInfo['versionDescription'] = version['description'] if 'description' in version else None
-        modelInfo["downloadUrl"] = (
-            version["downloadUrl"] if "downloadUrl" in version else None
-        )
+        modelInfo["downloadUrl"] = version["downloadUrl"] if "downloadUrl" in version else None
         # self.addMetaVID(version["id"], modelInfo)
         self.addMetaIID(version["id"], modelInfo)
         html = self.modelInfoHtml(modelInfo, nsfwLevel)
