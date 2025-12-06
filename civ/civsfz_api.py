@@ -482,7 +482,7 @@ class CivitaiModels(APIInformation):
     #    self.contentType = content_type
     # def getContentType(self) -> str:
     #    return self.contentType
-    def getRequestError(self) -> requests.exceptions.RequestException:
+    def getRequestError(self) -> requests.exceptions.RequestException | None:
         return self.requestError
     def clearRequestError(self):
         self.requestError = None
@@ -532,13 +532,13 @@ class CivitaiModels(APIInformation):
     #    return model_dict
 
     # Model
-    def getModelNameByID(self, id:int) -> str:
+    def getModelNameByID(self, id:int) -> str | None:
         name = None
         for item in self.jsonData['items']:
             if int(item['id']) == int(id):
                 name = item['name']
         return name
-    def getIDByModelName(self, name:str) -> str:
+    def getIDByModelName(self, name:str) -> int | None:
         id = None
         for item in self.jsonData['items']:
             if item['name'] == name:
@@ -594,12 +594,12 @@ class CivitaiModels(APIInformation):
                 if item['name'] == name:
                     retIndex = index
         return retIndex
-    def getSelectedModelIndex(self) -> int:
+    def getSelectedModelIndex(self) -> int | None:
         return self.modelIndex
     def getSelectedModelName(self) -> str:
         item = self.jsonData['items'][self.modelIndex]
         return item['name']
-    def getSelectedModelID(self) -> str:
+    def getSelectedModelID(self) -> int:
         item = self.jsonData['items'][self.modelIndex]
         return int(item['id'])
     def getSelectedModelType(self) -> str:
@@ -756,9 +756,9 @@ class CivitaiModels(APIInformation):
             return "EA"
         else:
             return ""
-    def setModelVersionInfo(self, modelInfo: str):
+    def setModelVersionInfo(self, modelInfo):
         self.modelVersionInfo = modelInfo
-    def getModelVersionInfo(self) -> str:
+    def getModelVersionInfo(self):
         return self.modelVersionInfo
     def getVersionDict(self) -> dict:
         version_dict = {}
@@ -781,7 +781,7 @@ class CivitaiModels(APIInformation):
         dtUpdatedAt = datetime.datetime.fromisoformat(strUpdatedAt)
         # print_lc(f'{dtUpdatedAt} {dtUpdatedAt.tzinfo}')
         return dtUpdatedAt
-    def getPublishedDatetime(self) -> datetime.datetime:
+    def getPublishedDatetime(self) -> datetime.datetime | None:
         item = self.jsonData['items'][self.modelIndex]
         version_dict = item['modelVersions'][self.versionIndex]
         if version_dict['publishedAt'] is None:
@@ -865,7 +865,7 @@ class CivitaiModels(APIInformation):
         versionIndex = self.versionIndex if versionIndex is None else versionIndex
         item = self.jsonData["items"][modelIndex]
         version = item["modelVersions"][versionIndex]
-        modelInfo = {"infoVersion": "2.4"}
+        modelInfo: dict[str, Any] = {"infoVersion": "2.4"}
         for key, value in item.items():
             if key not in ("modelVersions"):
                 modelInfo[key] = value
@@ -941,26 +941,26 @@ class CivitaiModels(APIInformation):
         self.cardPagination.nextPage(response)
     def backPage(self, response:dict) -> None:
         self.cardPagination.prevPage(response)
-    def getJumpUrl(self, page) -> str:
+    def getJumpUrl(self, page) -> str | None:
         return self.cardPagination.getJumpUrl(page)
     def pageJump(self, response:dict, page) -> None:
         self.cardPagination.pageJump(response, page)
     def getPagination(self):
         return self.cardPagination.getPagination()
 
-    def getCurrentPage(self) -> str:
+    def getCurrentPage(self) -> int:
         # return f"{self.jsonData['metadata']['currentPage']}"
         return self.cardPagination.currentPage if self.cardPagination is not None else 0
-    def getTotalPages(self) -> str:
+    def getTotalPages(self) -> int:
         # return f"{self.jsonData['metadata']['totalPages']}"
         # return f"{self.jsonData['metadata']['pageSize']}"
         return self.cardPagination.pageSize
-    def getPages(self) -> str:
+    def getPages(self) -> str | None:
         return f"{self.getCurrentPage()}/{self.getTotalPages()}"
-    def nextPage(self) -> str:
+    def nextPage(self) -> str | None:
         # return self.jsonData['metadata']['nextPage'] if 'nextPage' in self.jsonData['metadata'] else None
         return self.cardPagination.getNextUrl() if self.cardPagination is not None else None
-    def prevPage(self) -> str:
+    def prevPage(self) -> str | None:
         # return self.jsonData['metadata']['prevPage'] if 'prevPage' in self.jsonData['metadata'] else None
         return self.cardPagination.getPrevUrl() if self.cardPagination is not None else None
 
