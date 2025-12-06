@@ -14,7 +14,7 @@ from civ.civsfz_filemanage import (
     isExistFile,
 )
 from civ.civsfz_color import dictBasemodelColors
-from civ.civsfz_logging import print_lc, print_ly
+from civ.civsfz_logging import print_lc, print_ly, print_err
 from civ.civsfz_shared import opts, read_timeout
 from jinja2 import Environment, FileSystemLoader
 
@@ -545,7 +545,11 @@ class CivitaiModels(APIInformation):
                 id = int(item['id'])
         return id
     def getModelNameByIndex(self, index:int) -> str:
-        return self.jsonData['items'][index]['name']
+        try:
+            return self.jsonData['items'][index]['name']
+        except Exception as e:
+            print_err(e)
+            return ""
     def isNsfwModelByID(self, id:int) -> bool:
         nsfw = None
         for item in self.jsonData['items']:
